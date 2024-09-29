@@ -56,12 +56,14 @@
             // Check if "Hogweed" is detected with probability > 0.80
             if (prediction[i].className === "Hogweed" && prediction[i].probability > 0.80) {
                 invasiveDetected = true;
+                alert("Warning: Invasive Species Detected!");
             }
         }
 
         // Show or hide the warning based on detection
         if (invasiveDetected) {
             document.getElementById("warning-container").style.display = "block";
+            alert("Warning: Invasive Species Detected!");
         } else {
             document.getElementById("warning-container").style.display = "none";
         }
