@@ -57,11 +57,13 @@
         for (let i = 0; i < maxPredictions; i++) {
             const classPrediction = prediction[i].className + ": " + prediction[i].probability.toFixed(2);
             labelContainer.childNodes[i].innerHTML = classPrediction;
-
-            // Check if Hogweed is detected
+    
+            // Check if Hogweed is detected with a probability higher than 0.8
             if (prediction[i].className === hogweedLabel && prediction[i].probability > 0.8) {
-                hogweedDetected = true;
-                alert("You identified an invasive species! Follow the instructions below!")
+                if (!hogweedDetected) {
+                    hogweedDetected = true;
+                    alert("You identified an invasive species! Follow the instructions below!");
+                }
             }
         }
 
