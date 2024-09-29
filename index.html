@@ -52,15 +52,18 @@
     async function predict() {
         // Predict using the model
         const prediction = await model.predict(webcam.canvas);
-        let hogweedDetected = false;
-
+        let hogweedDetected = false;  // Flag to track if Hogweed was detected
+    
         for (let i = 0; i < maxPredictions; i++) {
             const classPrediction = prediction[i].className + ": " + prediction[i].probability.toFixed(2);
             labelContainer.childNodes[i].innerHTML = classPrediction;
     
             // Check if Hogweed is detected with a probability higher than 0.8
             if (prediction[i].className === hogweedLabel && prediction[i].probability > 0.8) {
-                alert("You identified an invasive species! Follow the instructions below!");
+                if (!hogweedDetected) {  // Trigger the alert only once
+                    hogweedDetected = true;  // Set the flag to true so the alert won't be triggered again
+                    alert("You identified an invasive species! Follow the instructions below!");
+                }
             }
         }
 
