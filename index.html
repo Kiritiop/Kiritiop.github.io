@@ -61,6 +61,7 @@
             // Check if Hogweed is detected
             if (prediction[i].className === hogweedLabel && prediction[i].probability > 0.8) {
                 hogweedDetected = true;
+                alert("You identified an invasive species! Follow the instructions below!")
             }
         }
 
