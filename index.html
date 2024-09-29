@@ -1,20 +1,24 @@
-<div>Teachable Machine Image Model</div>
-<div>Teachable Machine Image Model</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invasive Species Detector</title>
+    <!-- Load TensorFlow.js and Teachable Machine libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+</head>
+<body>
 
-
+<div>Teachable Machine Image Model</div>
 <button type="button" onclick="init()">Start</button>
 <div id="webcam-container"></div>
 <div id="label-container"></div>
-<div id="warning-container" style="display:none; color: red; font-weight: bold; font-size: 20px;">Warning: Invasive Species Detected!</div>
-
-<!-- Load TensorFlow.js and Teachable Machine libraries -->
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
 
 <script type="text/javascript">
     // URL to your GitHub-hosted model files
     const URL = "https://Kiritiop.github.io/"; // Adjust if needed
-    
+
     let model, webcam, labelContainer, maxPredictions;
 
     // Load the image model and setup the webcam
@@ -50,27 +54,18 @@
     async function predict() {
         // Predict using the model
         const prediction = await model.predict(webcam.canvas);
-        let invasiveDetected = false;
         
         for (let i = 0; i < maxPredictions; i++) {
             const classPrediction = prediction[i].className + ": " + prediction[i].probability.toFixed(2);
             labelContainer.childNodes[i].innerHTML = classPrediction;
 
             // Check if "Hogweed" is detected with probability > 0.80
-            if (prediction[i].className == "Hogweed" && prediction[i].probability > 0.80) {
-
-                invasiveDetected = true;
+            if (prediction[i].className === "Hogweed" && prediction[i].probability > 0.80) {
                 alert("Warning: Invasive Species Detected!");
             }
         }
-
-        // Show or hide the warning based on detection
-        if (invasiveDetected) {
-            document.getElementById("warning-container").style.display = "block";
-            alert("Warning: Invasive Species Detected!");
-        } else {
-            document.getElementById("warning-container").style.display = "none";
-        }
     }
-
 </script>
+
+</body>
+</html>
