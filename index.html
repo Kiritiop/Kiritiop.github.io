@@ -7,15 +7,6 @@
     <!-- Load TensorFlow.js and Teachable Machine libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
-    <style>
-        #report-container {
-            display: none; /* Hidden by default */
-            color: blue; /* You can customize the color */
-            font-weight: bold;
-            font-size: 16px;
-            margin-top: 10px;
-        }
-    </style>
 </head>
 <body>
 
@@ -23,13 +14,6 @@
 <button type="button" onclick="init()">Start</button>
 <div id="webcam-container"></div>
 <div id="label-container"></div>
-<div id="report-container">
-    <h3>Report sightings</h3>
-    <p>You came across an invasive species. Report it!</p>
-    <p>by phone: contact the toll free Invading Species Hotline at Toll-free: 1-800-563-7711</p>
-    <p>online: visit <a href="https://eddmaps.org" target="_blank">EDD Maps</a>, or visit the <a href="https://ontario.ca/invasive-species" target="_blank">Invasive Species in Ontario project</a> to report a sighting</p>
-    <p>on your mobile: download the <a href="https://eddmaps.org/mobiles/index.cfm" target="_blank">EDDMapS Ontario app</a> on your mobile phone (iOS or Android)</p>
-</div>
 
 <script type="text/javascript">
     // URL to your GitHub-hosted model files
@@ -75,16 +59,9 @@
             const classPrediction = prediction[i].className + ": " + prediction[i].probability.toFixed(2);
             labelContainer.childNodes[i].innerHTML = classPrediction;
 
-            // Log class names and probabilities for debugging
-            console.log("Class:", prediction[i].className);
-            console.log("Probability:", prediction[i].probability);
-
             // Check if "Hogweed" is detected with probability > 0.80
-            if (prediction[i].className.trim().toLowerCase() === "HogWeed" && prediction[i].probability > 0.80) {
+            if (prediction[i].className === "HogWeed" && prediction[i].probability > 0.80) {
                 alert("Warning: Invasive Species Detected!");
-                document.getElementById("report-container").style.display = "block"; // Show report message
-            } else {
-                document.getElementById("report-container").style.display = "none"; // Hide report message if not Hogweed
             }
         }
     }
