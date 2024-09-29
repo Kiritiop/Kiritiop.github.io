@@ -3,11 +3,6 @@
 <div id="webcam-container"></div>
 <div id="label-container"></div>
 
-<!-- Popup for Invasive Species Warning -->
-<div id="popup" style="display: none; position: absolute; top: 20px; left: 20px; padding: 20px; background-color: red; color: white; font-size: 20px;">
-    Invasive Species Detected: Hogweed!
-</div>
-
 <!-- Load TensorFlow.js and Teachable Machine libraries -->
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
@@ -17,7 +12,6 @@
     const URL = "https://Kiritiop.github.io/"; // Adjust if needed
 
     let model, webcam, labelContainer, maxPredictions;
-    const hogweedLabel = "Hogweed"; // Label for Hogweed from your model
 
     // Load the image model and setup the webcam
     async function init() {
@@ -52,21 +46,9 @@
     async function predict() {
         // Predict using the model
         const prediction = await model.predict(webcam.canvas);
-        let hogweedDetected = false;  // Flag to track if Hogweed was detected
-    
         for (let i = 0; i < maxPredictions; i++) {
             const classPrediction = prediction[i].className + ": " + prediction[i].probability.toFixed(2);
             labelContainer.childNodes[i].innerHTML = classPrediction;
-    
-            // Check if Hogweed is detected with a probability higher than 0.8
-            if (prediction[i].className === hogweedLabel && prediction[i].probability > 0.8) {
-                if (!hogweedDetected) {  // Trigger the popup only once
-                    hogweedDetected = true;  // Set the flag to true so the popup won't be triggered again
-                    document.getElementById("popup").style.display = "block";  // Show the popup
-                }
-            } else {
-                document.getElementById("popup").style.display = "none";  // Hide the popup if not detected
-            }
         }
     }
 </script>
