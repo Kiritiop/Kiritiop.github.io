@@ -1,4 +1,6 @@
 <div>Teachable Machine Image Model</div>
+<div>Troubleshoot</div>
+
 <button type="button" onclick="init()">Start</button>
 <div id="webcam-container"></div>
 <div id="label-container"></div>
@@ -55,6 +57,8 @@
 
             // Check if "Hogweed" is detected with probability > 0.80
             if (prediction[i].className === "Hogweed" && prediction[i].probability > 0.80) {
+                <div>invasive</div>
+
                 invasiveDetected = true;
                 alert("Warning: Invasive Species Detected!");
             }
